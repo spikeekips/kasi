@@ -26,7 +26,7 @@
 
 If your managed source has some trouble and you want to send redirect response to the client for safety, you can easily make custom response within configuration  e.g.
 
-```
+```yaml
 response: |
   HTTP/1.1 302 Found
   Location: http://www.iana.org/domains/example/
@@ -36,7 +36,7 @@ response: |
 
 When failed to get the expected response from source, the custom response will be sent to the client, that response can be made in configuration easily. As you guess, this error back also can be possible using middleware.
 
-```
+```yaml
 when-error:
   status:
     - 400 - 499
@@ -148,7 +148,7 @@ In config, the `timeout` will set the tomeout globally, services or endpoints.
 
 This is example configuration.
 
-```
+```yaml
 %YAML 1.1
 
 - default:
@@ -191,8 +191,6 @@ This is example configuration.
 ...
 ```
 
-
-## Reference
 
 [1]: https://gist.github.com/camoles/523dac8cc0fe40d52f66 "VirtualHost in Golang"
 [2]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS "CORS"
