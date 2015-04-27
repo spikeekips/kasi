@@ -139,7 +139,7 @@ to
 `https://api.kasi/{username}`
 
 
-### timeout
+## timeout
 
 In config, the `timeout` will set the tomeout globally, services or endpoints.
 
