@@ -134,7 +134,7 @@ manipulate the request and response.
 
 The interesting feature in reshaping is the using the regular expression to reshape. e.g.
 
-`https://api.github.com/users/(?P<username>)`
+`https://api.github.com/users/(?P<username>.*)`
 to
 `https://api.kasi/{username}`
 
