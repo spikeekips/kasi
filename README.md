@@ -22,7 +22,7 @@
 - [x] configuration by YAML [3]
 
 
-## In-Place Response
+### In-Place Response
 
 If your managed source has some trouble and you want to send redirect response to the client for safety, you can easily make custom response within configuration  e.g.
 
@@ -32,7 +32,7 @@ response: |
   Location: http://www.iana.org/domains/example/
 ```
 
-## Error Back
+### Error Back
 
 When failed to get the expected response from source, the custom response will be sent to the client, that response can be made in configuration easily. As you guess, this error back also can be possible using middleware.
 
@@ -47,7 +47,7 @@ when-error:
 ```
 
 
-## User-Defined Middlewares
+### User-Defined Middlewares
 
 kasi has it's own middlewares and support the user-defined middlewares. You can write your own middlewares using `javascript`, so you easily manipulate the request and response.
 
@@ -84,19 +84,19 @@ var process_response = function (endpointSetting, reqeust, response) {
 ```
 
 
-## CORS
+### CORS
 
 If you make the web application with ajax and your target service does not provide the `CORS`, you can make kasi can do it.
 
 With `cors` and it's children settings, you can easily support `CORS` by services, endpoints or globally.
 
 
-## Service Discovery
+### Service Discovery
 
 kasi provides it's own API, so you can add or remove the services without any break or reload of kasi.
 
 
-## Statistic
+### Statistic
 
 kasi provides the special dashboard, it has the special statistic page. It will show you the current statistics for services.
 
@@ -107,7 +107,7 @@ kasi provides the special dashboard, it has the special statistic page. It will 
 > You also apply the "Measurement Protocole" of Google Analytics using the user defined middlewares by services. [6]
 
 
-## Cache Control
+### Cache Control
 
 Usually for performance reason, most of the web applications and servers support cache with their own ways, e.g. `ETAG`[4], or using headers like `If-Modified-Since` or `Expires`.
 
@@ -116,12 +116,12 @@ kasi respects their own cache mechanisms, and further more, explicitly supports 
 With using cache of kasi, kasi will cache the data from the services and produce the response with it.
 
 
-## Support Virtual Domain
+### Support Virtual Domain
 
 Like `nginx`, kasi supports the virtualhost with SSL.
 
 
-## Reshape Endpoints
+### Reshape Endpoints
 
 If you connect to the API of github, you can rename the API endpoint like this,
 
@@ -144,7 +144,7 @@ to
 In config, the `timeout` will set the tomeout globally, services or endpoints.
 
 
-## YAML configuration Example
+### YAML configuration Example
 
 This is example configuration.
 
