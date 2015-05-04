@@ -1,0 +1,24 @@
+%YAML 1.1
+---
+
+- default:
+    bind: ":8000"
+    source: https://github.com/api/v1
+
+- service:
+    hostname: a.com
+    endpoints:
+        - endpoint:
+            source: /a
+            expose: /b
+
+- service:
+    bind: ":90"
+    hostname: b.com
+    endpoints:
+        - endpoint:
+            source: /a
+            expose: /b
+
+---
+	

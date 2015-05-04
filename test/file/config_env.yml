@@ -1,0 +1,14 @@
+%YAML 1.1
+---
+
+- service:
+    bind: :8000
+    hostname: my0.github.com
+    source: https://github.com/api/v1
+    timeout: 10s
+    endpoints:
+        - endpoint:
+            open: No
+            expose: /users/(?P<username>.*)
+            source: /find/{username}
+---

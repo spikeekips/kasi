@@ -1,0 +1,39 @@
+%YAML 1.1
+---
+
+- default:
+    hostname: default.localhost.domain
+    cache:
+        expire: 10m
+        backend: ["memory", "memcache://127.0.0.1:11211", "redis://127.0.0.1:6379"]
+    timeout: 5s
+
+- service:
+    bind: :8000
+    hostname: ["my0.github.com", "my1.github.com",]
+    ssl:
+        cert: /secret/a.cert
+        key: /secret/a.key
+        pem: /secret/a.pem
+
+    source: https://github.com/api/v1
+    timeout: 10s
+    endpoints:
+        - endpoint:
+            open: No
+            source: /find/{username}
+            expose: /users/(?P<username>.*)
+        - endpoint:
+            open: Yes
+            source: /github/\1
+            expose: (.*)
+            timeout: 60s
+            cors:
+                allow-origin: http://localhost:9090
+                # or allow-origin: [http://localhost:9090, http://localhost:9091]
+                allow-methods: [GET, POST, PUT, OPTIONS, HEAD]
+                allow-headers: [X-My-Header]
+                allow-credentials: true
+                max-age: 178000
+---
+	

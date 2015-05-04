@@ -1,0 +1,46 @@
+%YAML 1.1
+---
+
+- middlewares:
+    - base:
+        - a.js
+        - b.js
+    - extend:
+        - c.js
+        - d.js
+
+- default:
+    bind: ":8000"
+    source: https://github.com/api/v1
+
+- service:
+    id: "service0"
+    hostname: a.com
+    middleware: base
+    endpoints:
+        - endpoint:
+            expose: /b
+            source: /a
+
+        - endpoint:
+            middleware: No
+            expose: /b0
+            source: /a0
+
+- service:
+    id: "service1"
+    bind: ":90"
+    hostname: b.com
+    middleware: extend
+    endpoints:
+        - endpoint:
+            middleware: base
+            expose: /b
+            source: /a
+
+        - endpoint:
+            expose: /b1
+            source: /a1
+
+---
+	

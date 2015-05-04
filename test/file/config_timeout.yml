@@ -1,0 +1,47 @@
+%YAML 1.1
+---
+
+- default:
+    timeout: 6s
+
+- service:
+    bind: ":8000"
+    hostname: a.com
+    source: https://a.com/api/v1
+    timeout: 9s
+    endpoints:
+        - endpoint:
+            source: /a
+            expose: /b
+
+- service:
+    bind: ":8000"
+    hostname: b.com
+    source: https://b.com/api/v1
+    timeout: 0
+    endpoints:
+        - endpoint:
+            source: /a
+            expose: /b
+
+- service:
+    bind: ":8000"
+    hostname: c.com
+    source: https://b.com/api/v1
+    timeout: -1
+    endpoints:
+        - endpoint:
+            source: /a
+            expose: /b
+
+- service:
+    bind: ":8000"
+    hostname: d.com
+    source: https://b.com/api/v1
+    endpoints:
+        - endpoint:
+            source: /a
+            expose: /b
+
+---
+	

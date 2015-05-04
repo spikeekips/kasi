@@ -1,0 +1,14 @@
+%YAML 1.1
+---
+
+- service:
+    bind: :8000
+    hostname: my0.github.com,    	 my1.github.com
+    source: https://github.com/api/v1
+    endpoints:
+        - endpoint:
+            expose: /b
+            source: /a
+
+---
+	

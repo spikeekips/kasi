@@ -1,0 +1,20 @@
+%YAML 1.1
+---
+
+- default:
+    ssl:
+        cert: /secret/a.cert
+        key: /secret/a.key
+        pem: /secret/a.pem
+
+- service:
+    bind: ":8000"
+    hostname: a.com
+    source: https://a.com/api/v1
+    ssl: Yes
+    endpoints:
+        - endpoint:
+            source: /a
+            expose: /b
+---
+	

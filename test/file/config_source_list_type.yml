@@ -1,0 +1,13 @@
+%YAML 1.1
+---
+
+- service:
+    bind: ":8000"
+    hostname: a.com
+    source: ["https://a.com/v2", "https://b.com/v2"]
+    endpoints:
+        - endpoint:
+            expose: /a
+            source: /b
+---
+	

@@ -7,11 +7,11 @@
 
 ## Feature
 
-- [ ] support HTTP, HTTPS service [12]
-- [ ] virtualhost [1] [9]
-- [ ] reshape the endpoint [7] [8]
-- [ ] user-defined middlewares using javascript [13]
-- [ ] cache control
+- [ ] support HTTP, HTTPS service [12] [14]
+- [x] virtualhost [1] [9] [16]
+- [x] reshape the endpoint [7] [8]
+- [x] user-defined middlewares using javascript [13]
+- [ ] cache control [15] [17]
 - [ ] timeout
 - [ ] KeepAlive
 - [ ] in-place response in config
@@ -19,7 +19,7 @@
 - [ ] support `CORS` (Cross-Origin Resource Sharing) [2]
 - [ ] statistic
 - [ ] service discovery
-- [ ] configuration by YAML [3]
+- [x] configuration by YAML [3]
 
 
 ## In-Place Response
@@ -134,12 +134,12 @@ manipulate the request and response.
 
 The interesting feature in reshaping is the using the regular expression to reshape. e.g.
 
-`https://api.github.com/users/(?P<username>.*)`
+`https://api.github.com/users/(?P<username>)`
 to
 `https://api.kasi/{username}`
 
 
-## timeout
+### timeout
 
 In config, the `timeout` will set the tomeout globally, services or endpoints.
 
@@ -192,6 +192,13 @@ This is example configuration.
 ```
 
 
+## Todo
+
+- [ ] more testing code
+- [ ] refactoring the entire code
+- [ ] clean up the monkey patch
+
+
 [1]: https://gist.github.com/camoles/523dac8cc0fe40d52f66 "VirtualHost in Golang"
 [2]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS "CORS"
 [3]: http://www.yaml.org/start.html "YAML"
@@ -204,4 +211,8 @@ This is example configuration.
 [11]: https://github.com/pquerna/ffjson "ffjson"
 [12]: https://github.com/epio/mantrid "Python based load-balancer"
 [13]: https://github.com/robertkrimen/otto "A JavaScript interpreter in Go (golang) http://godoc.org/github.com/robertkrimen/otto"
+[14]: http://fastah.blackbuck.mobi/blog/securing-https-in-go/ "The easy guide to securing HTTP + TLS with Go"
+[15]: https://github.com/coocood/freecache "freecache"
+[16]: http://www.reddit.com/r/golang/comments/34bem7/socket_master_a_zeroconfig_reverse_proxy/
+[17]: https://github.com/coocood/freecache/blob/master/README.md "FreeCache"
 

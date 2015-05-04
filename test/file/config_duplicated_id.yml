@@ -1,0 +1,27 @@
+%YAML 1.1
+---
+
+- service:
+    id: this-is-service-id
+    bind: :8000
+    hostname:
+        - my0.github.com
+        - my1.github.com
+    ssl:
+        cert: /secret/a.cert
+        key: /secret/a.key
+        pem: /secret/a.pem
+
+    source: https://github.com/api/v1
+    timeout: 10s
+    endpoints:
+        - endpoint:
+            id: findme
+            expose: findme
+            source: /findme
+        - endpoint:
+            id: this-is-service-id
+            expose: uuid-id
+            source: /uuid-id
+
+---
