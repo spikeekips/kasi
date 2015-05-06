@@ -36,8 +36,6 @@ func HTTPServe(setting *kasi_conf.CoreSetting) {
 			log.Fatal(server.ListenAndServe())
 		}(bind, serveMux)
 	}
-
-	http.ListenAndServe(":19000", nil) // dummy listener
 }
 
 func HTTPServiceHandler(service *kasi_conf.ServiceSetting, w http.ResponseWriter, r *http.Request) {

@@ -10,8 +10,8 @@ var logFormat = logging.MustStringFormatter(
 	"%{color}%{time:2006-01-01T15:04:05.000} %{shortfunc} > [%{level:.2s}]%{color:reset} %{message}",
 )
 
-var _log *logging.Logger
 var log *logging.Logger
+var DefaultLogLevel logging.Level = logging.CRITICAL
 
 func SetLogging(level logging.Level) *logging.Logger {
 	log = logging.MustGetLogger("kasi")
