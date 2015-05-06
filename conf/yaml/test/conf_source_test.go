@@ -1,4 +1,4 @@
-package kasi_t
+package test_yaml_conf
 
 import (
 	"testing"
@@ -43,7 +43,7 @@ func TestSourceList(t *testing.T) {
 	assert := assert.Assert(t)
 
 	var yml string
-	var setting *kasi_conf.CoreSetting
+	var setting *conf.CoreSetting
 	var err error
 
 	yml = loadFile("config_source_list_type.yml")
@@ -51,7 +51,7 @@ func TestSourceList(t *testing.T) {
 	assert.Nil(err)
 	assert.Equal(len(setting.Services[0].Sources), 2)
 
-	merged := kasi_conf.MergeURLs(setting.Services[0].Sources, []string{"/b"})
+	merged := conf.MergeURLs(setting.Services[0].Sources, []string{"/b"})
 
 	assert.Equal(setting.Services[0].Endpoints[0].Sources, merged)
 }

@@ -1,4 +1,4 @@
-package kasi_util
+package util
 
 import "path"
 

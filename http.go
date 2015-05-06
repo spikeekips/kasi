@@ -10,7 +10,7 @@ import (
 	"github.com/spikeekips/kasi/util"
 )
 
-func HTTPServe(setting *kasi_conf.CoreSetting) {
+func HTTPServe(setting *conf.CoreSetting) {
 	for bind, services := range setting.GetServicesByBind() {
 		log.Debug("> create server for bind: %v", bind)
 		serveMux := http.NewServeMux()
@@ -19,7 +19,7 @@ func HTTPServe(setting *kasi_conf.CoreSetting) {
 			for _, pattern := range service.GetPatterns() {
 				log.Debug("\tregister pattern: %v: %v", service.GetID(), pattern)
 
-				func(service *kasi_conf.ServiceSetting) {
+				func(service *conf.ServiceSetting) {
 					serveMux.HandleFunc(
 						pattern,
 						func(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +38,7 @@ func HTTPServe(setting *kasi_conf.CoreSetting) {
 	}
 }
 
-func HTTPServiceHandler(service *kasi_conf.ServiceSetting, w http.ResponseWriter, r *http.Request) {
+func HTTPServiceHandler(service *conf.ServiceSetting, w http.ResponseWriter, r *http.Request) {
 	log.Debug("r(%p) %v", r, r.URL)
 	log.Debug("r(%p) service id: %v", r, service.GetID())
 
@@ -117,7 +117,7 @@ var RESPONSE_HEADER_KEY_MUST_BE_SKIPPED []string = []string{
 func NewMiddlewareResponseFromHTTPResponse(response *HTTPResponse) MiddlewareResponse {
 	newHeader := map[string]string{}
 	for header_key, value := range response.Header {
-		if kasi_util.InArray(RESPONSE_HEADER_KEY_MUST_BE_SKIPPED, header_key) {
+		if util.InArray(RESPONSE_HEADER_KEY_MUST_BE_SKIPPED, header_key) {
 			continue
 		}
 		newHeader[header_key] = value[0]
@@ -132,7 +132,7 @@ func NewMiddlewareResponseFromHTTPResponse(response *HTTPResponse) MiddlewareRes
 
 }
 
-func HTTPMiddlewarePreRequest(endpoint *kasi_conf.EndpointSetting, r *http.Request) *MiddlewareResponse {
+func HTTPMiddlewarePreRequest(endpoint *conf.EndpointSetting, r *http.Request) *MiddlewareResponse {
 	for i := 0; i < len(endpoint.Middleware); i++ {
 		jsFile, err := ioutil.ReadFile(endpoint.Middleware[i])
 		if err != nil {
@@ -169,7 +169,7 @@ func HTTPMiddlewarePreRequest(endpoint *kasi_conf.EndpointSetting, r *http.Reque
 }
 
 func HTTPMiddlewarePostResponse(
-	endpoint *kasi_conf.EndpointSetting,
+	endpoint *conf.EndpointSetting,
 	r *http.Request,
 	response *HTTPResponse,
 ) *MiddlewareResponse {

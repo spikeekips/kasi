@@ -1,4 +1,4 @@
-package kasi_conf
+package conf
 
 import (
 	"errors"
@@ -39,15 +39,16 @@ func (setting *ServiceSetting) GetID() string {
 }
 
 func (setting *ServiceSetting) String() string {
-	return kasi_util.ToJson(setting)
+	return util.ToJson(setting)
 }
 
 func (setting *ServiceSetting) Opened() bool {
 	if len(setting.Endpoints) < 1 {
 		return false
 	}
+
 	for _, endpointSetting := range setting.Endpoints {
-		if endpointSetting.Opened() {
+		if endpointSetting.Open {
 			return true
 		}
 	}
@@ -66,7 +67,7 @@ func (setting *ServiceSetting) GetPatterns() []string {
 	for _, s := range setting.Hostnames {
 		expose := fmt.Sprintf(
 			"%s%s/",
-			kasi_util.RStripSlash(s),
+			util.RStripSlash(s),
 			portExpression,
 		)
 		exposes = append(exposes, expose)
@@ -77,7 +78,7 @@ func (setting *ServiceSetting) GetPatterns() []string {
 
 func (setting *ServiceSetting) GetMatchedEndpoint(path string) (*EndpointSetting, error) {
 	for _, endpoint := range setting.Endpoints {
-		matched := endpoint.exposeRegexp.Match([]byte(path))
+		matched := endpoint.ExposeRegexp.Match([]byte(path))
 		if !matched {
 			continue
 		}

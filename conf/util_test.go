@@ -1,4 +1,4 @@
-package kasi_conf
+package conf
 
 import (
 	"net"
@@ -28,7 +28,7 @@ func TestParseTimeUnit(t *testing.T) {
 	for _, c := range cases {
 		assert.Equal(
 			func() time.Duration {
-				p, err := parseTimeUnit(c.in)
+				p, err := ParseTimeUnit(c.in)
 				assert.Nil(err)
 				return p
 			}(),
@@ -52,7 +52,7 @@ func TestSplitHostPort(t *testing.T) {
 	for _, c := range cases {
 		assert.Equal(
 			func() *net.TCPAddr {
-				p, err := splitHostPort(c.in)
+				p, err := SplitHostPort(c.in)
 				assert.Nil(err)
 				return p
 			}(),
@@ -69,27 +69,27 @@ func TestJoinURL(t *testing.T) {
 	// 2 FQDN url
 	base = "http://a0.com/b0/c0.html"
 	target = "http://a1.com/b1/c1.html"
-	assert.Equal(joinURL(base, target), target)
+	assert.Equal(JoinURL(base, target), target)
 
 	// 1 FQDN and 1 path
 	base = "http://a0.com/b0/c0.html"
 	target = "/b1/c1.html"
-	assert.Equal(joinURL(base, target), "http://a0.com"+target)
+	assert.Equal(JoinURL(base, target), "http://a0.com"+target)
 
 	// 1 invalid url and 1 valid url
 	base = "****************\\*"
 	target = "/b1/c1.html"
-	assert.Equal(joinURL(base, target), target)
+	assert.Equal(JoinURL(base, target), target)
 
 	// 2 path, but one is relative
 	base = "/b0/c0.html"
 	target = "b1/c1.html"
-	assert.Equal(joinURL(base, target), base+"/"+target)
+	assert.Equal(JoinURL(base, target), base+"/"+target)
 
 	// merge querystring
 	base = "/b0/c0.html?a=1&b=2"
 	target = "b1/c1.html?a=3"
-	assert.Equal(joinURL(base, target), "/b0/c0.html/b1/c1.html?a=3&b=2")
+	assert.Equal(JoinURL(base, target), "/b0/c0.html/b1/c1.html?a=3&b=2")
 }
 
 func TestIsPath(t *testing.T) {
@@ -106,7 +106,7 @@ func TestIsPath(t *testing.T) {
 	}
 	for _, c := range cases {
 		assert.Equal(
-			isPath(c.in),
+			IsPath(c.in),
 			c.want,
 		)
 	}

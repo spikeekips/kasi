@@ -1,4 +1,4 @@
-package kasi_conf
+package conf
 
 import (
 	"errors"
@@ -16,9 +16,9 @@ import (
 // EndpointSetting
 type EndpointSetting struct {
 	ID           string
-	open         bool
+	Open         bool
 	Expose       string
-	exposeRegexp *regexp.Regexp
+	ExposeRegexp *regexp.Regexp
 	Sources      []string
 	Cache        time.Duration
 	Timeout      time.Duration
@@ -34,7 +34,7 @@ func (setting *EndpointSetting) GetID() string {
 }
 
 func (setting *EndpointSetting) String() string {
-	return kasi_util.ToJson(setting)
+	return util.ToJson(setting)
 }
 
 type EndpointSettings []*EndpointSetting
@@ -51,13 +51,9 @@ func (setting EndpointSettings) AreEqual(a int, b int) bool {
 	return setting[a].Expose == setting[b].Expose
 }
 
-func (setting *EndpointSetting) Opened() bool {
-	return setting.open
-}
-
 func (setting *EndpointSetting) GetTargetURL(url url.URL) (string, error) {
-	subNames := setting.exposeRegexp.SubexpNames()
-	subMatches := setting.exposeRegexp.FindAllStringSubmatch(url.Path, -1)
+	subNames := setting.ExposeRegexp.SubexpNames()
+	subMatches := setting.ExposeRegexp.FindAllStringSubmatch(url.Path, -1)
 	if len(subMatches) < 1 {
 		return "", errors.New("failed to get pattern")
 	}

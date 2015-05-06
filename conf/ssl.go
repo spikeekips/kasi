@@ -1,4 +1,4 @@
-package kasi_conf
+package conf
 
 import "github.com/spikeekips/kasi/util"
 
@@ -10,5 +10,5 @@ type SSLSetting struct {
 }
 
 func (setting *SSLSetting) String() string {
-	return kasi_util.ToJson(setting)
+	return util.ToJson(setting)
 }

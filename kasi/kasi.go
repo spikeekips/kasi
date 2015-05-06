@@ -21,7 +21,7 @@ var (
 	debug    = app.Flag("debug", "Enable debug mode.").Bool()
 	logLevel = app.Flag(
 		"loglevel",
-		fmt.Sprintf("log level, {%s}", strings.Join(kasi_util.LogLevelNames, ", ")),
+		fmt.Sprintf("log level, {%s}", strings.Join(util.LogLevelNames, ", ")),
 	).String()
 
 	start         = app.Command("start", "Start new server")
@@ -34,12 +34,12 @@ var (
 	reloadSock    = reload.Flag("sock", "socket file").Default("kasi.sock").String()
 )
 
-func checkConf(conf string) (*kasi_conf.CoreSetting, error) {
+func checkConf(conf string) (*conf.CoreSetting, error) {
 	wd, err := os.Getwd()
 	if err != nil {
 		return nil, errors.New("failed to get current directory.")
 	}
-	confTemp := kasi_util.JoinPath(wd, conf)
+	confTemp := util.JoinPath(wd, conf)
 
 	state, err := os.Stat(confTemp)
 	if err != nil {
@@ -73,13 +73,13 @@ func main() {
 	if *debug {
 		*logLevel = "DEBUG"
 	}
-	logLevelFound, logLevelNotFound := kasi_util.GetLogLevel(*logLevel)
+	logLevelFound, logLevelNotFound := util.GetLogLevel(*logLevel)
 	if logLevelNotFound != nil {
 		logLevelFound = kasi.DefaultLogLevel
 	}
 	log = kasi.SetLogging(logLevelFound)
 
-	var setting *kasi_conf.CoreSetting
+	var setting *conf.CoreSetting
 	var err error
 
 	// load config
@@ -113,7 +113,7 @@ func main() {
 	case start.FullCommand():
 		log.Debug("hello! this is `kasi`.")
 		log.Debug("start")
-		log.Debug("setting: %v", kasi_util.ToJson(setting))
+		log.Debug("setting: %v", util.ToJson(setting))
 
 		kasi.Start(setting)
 	}

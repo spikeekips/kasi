@@ -1,4 +1,4 @@
-package kasi_t
+package test_yaml_conf
 
 import (
 	"testing"
@@ -12,7 +12,7 @@ func TestSSL(t *testing.T) {
 	assert := assert.Assert(t)
 
 	var yml string
-	var setting *kasi_conf.CoreSetting
+	var setting *conf.CoreSetting
 	var err error
 
 	yml = loadFile("config_ssl.yml")
@@ -32,7 +32,7 @@ func TestSSLInheritFromDefault(t *testing.T) {
 	assert := assert.Assert(t)
 
 	var yml string
-	var setting *kasi_conf.CoreSetting
+	var setting *conf.CoreSetting
 	var err error
 
 	yml = loadFile("config_ssl_inherit_from_default_but_default_is_nil.yml")

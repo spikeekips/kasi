@@ -1,4 +1,4 @@
-package kasi_t
+package test_yaml_conf
 
 import (
 	"testing"
@@ -12,7 +12,7 @@ func TestEndpoints(t *testing.T) {
 	assert := assert.Assert(t)
 
 	var yml string
-	var setting *kasi_conf.CoreSetting
+	var setting *conf.CoreSetting
 	var err error
 
 	yml = loadFile("config_simple_endpoint0.yml")
@@ -44,7 +44,7 @@ func TestEndpointsOpen(t *testing.T) {
 	assert := assert.Assert(t)
 
 	var yml string
-	var setting *kasi_conf.CoreSetting
+	var setting *conf.CoreSetting
 	var err error
 
 	yml = loadFile("config_simple_endpoint0.yml")

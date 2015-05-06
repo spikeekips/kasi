@@ -8,9 +8,9 @@ import (
 )
 
 var stopChannel chan int
-var setting *kasi_conf.CoreSetting
+var setting *conf.CoreSetting
 
-func Start(settingInput *kasi_conf.CoreSetting) {
+func Start(settingInput *conf.CoreSetting) {
 	log = SetLogging(settingInput.Env.LogLevel)
 
 	setting = settingInput

@@ -1,4 +1,4 @@
-package kasi_util
+package util
 
 type Comparable interface {
 	AreEqual(int, int) bool

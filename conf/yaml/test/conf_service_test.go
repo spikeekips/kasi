@@ -1,4 +1,4 @@
-package kasi_t
+package test_yaml_conf
 
 import (
 	"net"
@@ -11,23 +11,23 @@ import (
 func TestGetServicesByBind(t *testing.T) {
 	assert := assert.Assert(t)
 
-	var coreSetting *kasi_conf.CoreSetting
+	var coreSetting *conf.CoreSetting
 
 	// blank services
-	coreSetting = &kasi_conf.CoreSetting{}
+	coreSetting = &conf.CoreSetting{}
 	services := coreSetting.GetServicesByBind()
 	assert.Equal(len(services), 0)
 
-	makeCoreSettingsWithPorts := func(ports ...int) *kasi_conf.CoreSetting {
-		services := []*kasi_conf.ServiceSetting{}
+	makeCoreSettingsWithPorts := func(ports ...int) *conf.CoreSetting {
+		services := []*conf.ServiceSetting{}
 		for _, port := range ports {
-			service := kasi_conf.ServiceSetting{
+			service := conf.ServiceSetting{
 				Bind: &net.TCPAddr{Port: port},
 			}
 			services = append(services, &service)
 		}
 
-		return &kasi_conf.CoreSetting{
+		return &conf.CoreSetting{
 			Services: services,
 		}
 	}

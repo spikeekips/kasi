@@ -1,4 +1,4 @@
-package kasi_t
+package test_yaml_conf
 
 import (
 	"net"

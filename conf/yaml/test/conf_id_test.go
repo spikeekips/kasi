@@ -1,4 +1,4 @@
-package kasi_t
+package test_yaml_conf
 
 import (
 	"testing"
@@ -12,7 +12,7 @@ func TestID(t *testing.T) {
 	assert := assert.Assert(t)
 
 	var yml string
-	var setting *kasi_conf.CoreSetting
+	var setting *conf.CoreSetting
 	var err error
 
 	yml = loadFile("config_check_id.yml")
@@ -29,8 +29,8 @@ func TestGetEndpointByID(t *testing.T) {
 	assert := assert.Assert(t)
 
 	var yml string
-	var setting *kasi_conf.CoreSetting
-	var endpointSetting *kasi_conf.EndpointSetting
+	var setting *conf.CoreSetting
+	var endpointSetting *conf.EndpointSetting
 	var err error
 
 	yml = loadFile("config_check_id.yml")

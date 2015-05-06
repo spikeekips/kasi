@@ -1,4 +1,4 @@
-package kasi_conf
+package conf
 
 import (
 	"errors"
@@ -18,7 +18,7 @@ import (
 // Parse time unit, e.g. `3s`, `10m`.
 // This follows the `time.ParseDuration()`, but also support day, month, year
 // range such as `d`: day, `M`: Month, `y`: year .
-func parseTimeUnit(s string) (time.Duration, error) {
+func ParseTimeUnit(s string) (time.Duration, error) {
 	var err error
 	var timeout_int64 int64
 	var timeout_unit time.Duration = 1
@@ -58,7 +58,7 @@ func parseTimeUnit(s string) (time.Duration, error) {
 	return time.Duration(timeout_int64) * timeout_unit, nil
 }
 
-func splitHostPort(s string) (*net.TCPAddr, error) {
+func SplitHostPort(s string) (*net.TCPAddr, error) {
 	hostString, portString, err := net.SplitHostPort(s)
 	if err != nil {
 		return nil, err
@@ -77,14 +77,14 @@ func splitHostPort(s string) (*net.TCPAddr, error) {
 	return &net.TCPAddr{IP: ip, Port: int(port)}, nil
 }
 
-func joinPath(base string, target string) string {
+func JoinPath(base string, target string) string {
 	if path.IsAbs(target) {
 		return target
 	}
 	return path.Join(base, target)
 }
 
-func joinURL(base string, target string) string {
+func JoinURL(base string, target string) string {
 	baseUrl, _ := url.Parse(base)
 	targetUrl, _ := url.Parse(target)
 	if len(targetUrl.Scheme) > 0 {
@@ -92,7 +92,7 @@ func joinURL(base string, target string) string {
 	}
 
 	// join path
-	baseUrl.Path = joinPath(baseUrl.Path, targetUrl.Path)
+	baseUrl.Path = JoinPath(baseUrl.Path, targetUrl.Path)
 
 	// merge querystring
 	queries := baseUrl.Query()
@@ -104,7 +104,7 @@ func joinURL(base string, target string) string {
 	return UnescapeURL(baseUrl.String())
 }
 
-func isPath(maybePath string) bool {
+func IsPath(maybePath string) bool {
 	u, err := url.Parse(maybePath)
 	if err != nil {
 		return true
@@ -122,13 +122,13 @@ func MergeURLs(base []string, targets []string) (sources []string) {
 	}
 
 	for _, t := range targets {
-		if !isPath(t) || len(base) < 1 {
+		if !IsPath(t) || len(base) < 1 {
 			sources = append(sources, t)
 			continue
 		}
 
 		for _, b := range base {
-			merged := joinURL(b, t)
+			merged := JoinURL(b, t)
 			sources = append(sources, merged)
 		}
 	}
@@ -136,7 +136,7 @@ func MergeURLs(base []string, targets []string) (sources []string) {
 	return sources
 }
 
-func isValidURL(s string) bool {
+func IsValidURL(s string) bool {
 	u, err := url.Parse(s)
 	if err != nil {
 		return false
@@ -149,10 +149,10 @@ func isValidURL(s string) bool {
 	return true
 }
 
-func validateSources(sources []string) bool {
+func ValidateSources(sources []string) bool {
 	// sources must be valid url
 	for _, i := range sources {
-		if !isValidURL(i) {
+		if !IsValidURL(i) {
 			return false
 		}
 	}
@@ -160,20 +160,20 @@ func validateSources(sources []string) bool {
 	return true
 }
 
-func parseSource(itemConfig *config.Config) ([]string, error) {
+func ParseSource(itemConfig *config.Config) ([]string, error) {
 	var err error
 
 	_, err = itemConfig.String("source")
 	if err == nil {
-		return parseSourceString(itemConfig)
+		return ParseSourceString(itemConfig)
 	}
 
 	_, err = itemConfig.List("source")
-	return parseSourceList(itemConfig)
+	return ParseSourceList(itemConfig)
 }
 
-func parseOneSource(s string) (string, error) {
-	source := kasi_util.Trim(s)
+func ParseOneSource(s string) (string, error) {
+	source := util.Trim(s)
 	_, err := url.Parse(source)
 	if err != nil {
 		return "", err
@@ -182,7 +182,7 @@ func parseOneSource(s string) (string, error) {
 	return source, nil
 }
 
-func parseSourceString(itemConfig *config.Config) ([]string, error) {
+func ParseSourceString(itemConfig *config.Config) ([]string, error) {
 	rawSource, err := itemConfig.String("source")
 	if err != nil {
 		return nil, err
@@ -190,10 +190,10 @@ func parseSourceString(itemConfig *config.Config) ([]string, error) {
 
 	var sources []string
 	for _, i := range strings.Split(rawSource, ",") {
-		if len(kasi_util.Trim(i)) < 1 {
+		if len(util.Trim(i)) < 1 {
 			continue
 		}
-		sourceUrl, err := parseOneSource(i)
+		sourceUrl, err := ParseOneSource(i)
 		if err != nil {
 			return nil, err
 		}
@@ -203,7 +203,7 @@ func parseSourceString(itemConfig *config.Config) ([]string, error) {
 	return sources, nil
 }
 
-func parseSourceList(itemConfig *config.Config) ([]string, error) {
+func ParseSourceList(itemConfig *config.Config) ([]string, error) {
 	rawSources, err := itemConfig.List("source")
 	if err != nil {
 		return nil, err
@@ -216,10 +216,10 @@ func parseSourceList(itemConfig *config.Config) ([]string, error) {
 			return nil, err
 		}
 
-		if len(kasi_util.Trim(source)) < 1 {
+		if len(util.Trim(source)) < 1 {
 			continue
 		}
-		sourceUrl, err := parseOneSource(source)
+		sourceUrl, err := ParseOneSource(source)
 		if err != nil {
 			return nil, err
 		}
